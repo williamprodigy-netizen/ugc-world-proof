@@ -3,9 +3,13 @@
 <title>UGC World - Proof</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel=stylesheet>
 <style>
-:root{--bg:#0a0b0d;--card:#14161b;--line:#23262e;--mut:#8b93a1;--ink:#eef1f5;--acc:#7c5cff;--acc2:#c084fc;--gold:#f4c14b;--grn:#41d18b}
+:root{--bg:#08090c;--card:#111319;--line:rgba(255,255,255,.08);--mut:#9aa2b1;--ink:#f3f5f8;--acc:#8b6cff;--acc2:#c98bff;--gold:#f4c14b;--grn:#3ee08f}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
+body:before,body:after{content:"";position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(100px);opacity:.45}
+body:before{width:600px;height:600px;top:-220px;right:-140px;background:radial-gradient(circle,rgba(139,108,255,.5),transparent 70%)}
+body:after{width:520px;height:520px;bottom:-220px;left:-160px;background:radial-gradient(circle,rgba(62,224,143,.26),transparent 70%)}
+.wrap{position:relative;z-index:1}
 .serif{font-family:Fraunces,serif}
 .wrap{max-width:1200px;margin:0 auto;padding:0 22px}
 nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(12px);background:rgba(10,11,13,.72);border-bottom:1px solid var(--line)}
@@ -43,10 +47,13 @@ section{padding:60px 0}
 .tierbtn{cursor:pointer;font-size:12.5px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:#0e1014;color:var(--mut)}
 .tierbtn.on{color:#fff;border-color:var(--gold);background:rgba(244,193,75,.12)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden;cursor:pointer;transition:.18s;position:relative}
-.card:hover{transform:translateY(-4px);border-color:var(--acc)}
-.thumb{height:215px;background:#0e1014 center/cover no-repeat;position:relative;display:flex;align-items:center;justify-content:center}
-.avatar{font-family:Fraunces;font-weight:900;font-size:46px;color:var(--acc2);opacity:.55}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s;position:relative;backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.card:hover{transform:translateY(-5px);border-color:rgba(139,108,255,.45);box-shadow:0 24px 50px -26px rgba(0,0,0,.8),0 0 40px -16px rgba(139,108,255,.5)}
+.thumb{height:215px;background:#0d0f14 center/cover no-repeat;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb:before{content:"";position:absolute;inset:0;background:radial-gradient(130% 90% at 50% 0,rgba(139,108,255,.16),transparent 65%);pointer-events:none}
+.ph{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:13px;padding:14px;text-align:center}
+.phface{width:76px;height:76px;border-radius:20px;background:linear-gradient(135deg,var(--acc),var(--grn));display:flex;align-items:center;justify-content:center;font-family:Fraunces;font-weight:900;font-size:30px;color:#fff;box-shadow:0 0 30px -6px var(--acc)}
+.phmet{font-family:Fraunces;font-weight:900;font-size:17px;line-height:1.1;background:linear-gradient(100deg,var(--grn),#74f7c4);-webkit-background-clip:text;background-clip:text;color:transparent}
 .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .play span{width:52px;height:52px;border-radius:50%;background:rgba(124,92,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.5)}
 .play span:after{content:"";border-left:16px solid #fff;border-block:10px solid transparent;margin-left:4px}
@@ -133,7 +140,7 @@ function initials(n){return n.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUp
 function card(p,i){
  const bg=p.vid?`https://i.ytimg.com/vi/${p.vid}/hqdefault.jpg`:p.img?`imgs/${p.img}`:'';
  const thumb=bg?`style="background-image:url('${bg}')"`:'';
- const av=bg?'':`<div class=avatar>${initials(p.person)}</div>`;
+ const av=bg?'':`<div class=ph><div class=phface>${initials(p.person)}</div><div class=phmet>${p.metric||''}</div></div>`;
  const play=p.vid?`<div class=play><span></span></div>`:'';
  return `<div class=card onclick="go(${i})"><div class=thumb ${thumb}>${av}${play}<div class="tierbadge ${tcls(p.tier)}">${p.tier}</div></div>
  <div class=cbody><div class=cname>${p.person}</div><div class=cmetric>${p.metric||''}</div><div class=cdemo>${p.demo||''}</div>
