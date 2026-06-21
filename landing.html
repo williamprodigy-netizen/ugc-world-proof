@@ -1,5 +1,5 @@
 <!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="noindex,nofollow">
+<meta name=robots content="index,follow">
 <title>UGC World - Proof</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel=stylesheet>
 <style>
@@ -88,14 +88,13 @@ footer{border-top:1px solid var(--line);padding:26px;text-align:center;color:#5b
 .mock{position:fixed;bottom:12px;left:12px;z-index:90;background:rgba(244,193,75,.14);border:1px solid var(--gold);color:var(--gold);font-size:11px;padding:5px 10px;border-radius:6px}
 @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.receipts{columns:2}}
 </style></head><body>
-<div class=mock>MOCKUP · verified-only proof · UGC World</div>
-<nav><div class=wrap><div class=logo>UGC<b>WORLD</b></div><a class=btn href="#apply">Apply to the Academy</a></div></nav>
+<nav><div class=wrap><div class=logo>UGC<b>WORLD</b></div><a class=btn href="https://ugc-world.com/registration">Watch the free class</a></div></nav>
 
 <header class=hero><div class=wrap>
 <div class=kick>Real people · real brands · real money</div>
 <h1 class=serif>They were exactly where <em>you</em> are.<br>Then they got paid.</h1>
 <p class=lead>Nurses, moms, students, retirees, total beginners with zero followers. Every win below is verified, with the receipt and the story behind it. Find someone who started where you are.</p>
-<div class=cta-row><a class=btn href="#wall">Find someone like me</a><a class="btn ghost" href="#apply">Watch the free class</a></div>
+<div class=cta-row><a class=btn href="#wall">Find someone like me</a><a class="btn ghost" href="https://ugc-world.com/registration">Watch the free class</a></div>
 <div class=stats id=stats></div>
 <div class=src-note>Aggregate paid-out figure per UGC World academy reporting. Individual wins shown are verified.</div>
 </div></header>
@@ -119,9 +118,9 @@ footer{border-top:1px solid var(--line);padding:26px;text-align:center;color:#5b
 <section class=final id=apply><div class=wrap>
 <h2 class=serif style="font-size:clamp(28px,5vw,46px)">The mile has been broken.<br>You just have to run.</h2>
 <p class=lead>Every person on this page had the same doubts you do. They stopped waiting. Book your free class and see if the Academy is a fit.</p>
-<div class=cta-row><a class=btn href="#">Apply now</a></div>
+<div class=cta-row><a class=btn href="https://ugc-world.com/registration">Watch the free class</a></div>
 </div></section>
-<footer>UGC WORLD · proof-architect mockup · all wins verified before publishing</footer>
+<footer>UGC WORLD · every win on this page verified before publishing</footer>
 
 <div class=ov id=ov><div class=modal id=modal></div></div>
 <div id=lb onclick="this.classList.remove('open')"><img id=lbimg></div>
@@ -145,8 +144,9 @@ function card(p,i){
  return `<div class=card onclick="go(${i})"><div class=thumb ${thumb}>${av}${play}<div class="tierbadge ${tcls(p.tier)}">${p.tier}</div></div>
  <div class=cbody><div class=cname>${p.person}</div><div class=cmetric>${p.metric||''}</div><div class=cdemo>${p.demo||''}</div>
  <div class=ptags>${p.personas.slice(0,3).map(t=>`<span class=pt>${t}</span>`).join('')}</div></div></div>`}
+const NONWALL=new Set(["UGC World (agency)","Agency brand demand","Poppy AI x UGC World","Gloria x School of Hard Knocks","Reddit review pool","Trustpilot review pool"]);
 function render(){
- let r=P.filter(p=>(!persona||p.personas.includes(persona))&&(!tierf||p.tier===tierf));
+ let r=P.filter(p=>!NONWALL.has(p.person)&&(!persona||p.personas.includes(persona))&&(!tierf||p.tier===tierf));
  r=r.slice().sort((a,b)=>((b.vid||b.img)?1:0)-((a.vid||a.img)?1:0));
  const g=document.getElementById('grid');
  g.innerHTML=r.length?r.map((p,i)=>card(p,P.indexOf(p))).join(''):'<div class=empty>No verified creators match yet. Try another filter.</div>';
